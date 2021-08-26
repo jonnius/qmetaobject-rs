@@ -1110,6 +1110,17 @@ impl QPixmap {
     pub fn size(&self) -> QSize {
         cpp!(unsafe [self as "const QPixmap*"] -> QSize as "QSize" { return self->size(); })
     }
+
+    /// Wrapper around [`loadFromData(const QByteArray &data, const char *format = nullptr, Qt::ImageConversionFlags flags = Qt::AutoColor)`][method] method.
+    ///
+    /// [method]: https://doc.qt.io/qt-5/qpixmap.html#loadFromData
+    pub fn load_from_bytearray(array: QByteArray) -> QPixmap {
+        cpp!(unsafe [array as "QByteArray"] -> QPixmap as "QPixmap" {
+            QPixmap pixmap;
+            pixmap.loadFromData(array);
+            return pixmap;
+        })
+    }
 }
 
 impl From<QPixmap> for QImage {
