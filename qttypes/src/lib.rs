@@ -1137,6 +1137,30 @@ impl QPixmap {
     pub fn fill(&mut self, color: QColor) {
         cpp!(unsafe [self as "QPixmap*", color as "QColor"] { self->fill(color); })
     }
+
+    /// Wrapper around scaled [`(const QSize &size, Qt::AspectRatioMode aspectRatioMode, Qt::TransformationMode transformMode) const`][method] method.
+    ///
+    /// [method]: https://doc.qt.io/qt-5/qpixmap.html#scaled
+    pub fn scaled(self, size: QSize, aspect_ratio_mode: AspectRatioMode, transformation_mode: TransformationMode) -> Self {
+        cpp!(unsafe [self as "QPixmap", size as "QSize", aspect_ratio_mode as "Qt::AspectRatioMode", transformation_mode as "Qt::TransformationMode"] -> QPixmap as "QPixmap" {
+            return self.scaled(size, aspect_ratio_mode, transformation_mode);
+        })
+    }
+}
+
+#[non_exhaustive]
+#[repr(i32)]
+pub enum AspectRatioMode {
+    IgnoreAspectRatio = 0,
+    KeepAspectRatio = 1,
+    KeepAspectRatioByExpanding = 2,
+}
+
+#[non_exhaustive]
+#[repr(i32)]
+pub enum TransformationMode {
+    FastTransformation = 0,
+    SmoothTransformation = 1,
 }
 
 impl From<QPixmap> for QImage {
