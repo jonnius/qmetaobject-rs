@@ -1104,13 +1104,6 @@ cpp_class!(
 );
 
 impl QPixmap {
-    /// Wrapper around [`size()`][method] method.
-    ///
-    /// [method]: https://doc.qt.io/qt-5/qpixmap.html#size
-    pub fn size(&self) -> QSize {
-        cpp!(unsafe [self as "const QPixmap*"] -> QSize as "QSize" { return self->size(); })
-    }
-
     /// Wrapper around [`loadFromData(const QByteArray &data, const char *format = nullptr, Qt::ImageConversionFlags flags = Qt::AutoColor)`][method] method.
     ///
     /// [method]: https://doc.qt.io/qt-5/qpixmap.html#loadFromData
@@ -1120,6 +1113,29 @@ impl QPixmap {
             pixmap.loadFromData(array);
             return pixmap;
         })
+    }
+
+    /// Wrapper around [`QPixmap(const QSize &size)`][ctor] constructor.
+    ///
+    /// [ctor]: https://doc.qt.io/qt-5/qpixmap.html#QPixmap-1
+    pub fn new(size: QSize) -> Self {
+        cpp!(unsafe [size as "QSize"] -> QPixmap as "QPixmap" {
+            return QPixmap(size);
+        })
+    }
+
+    /// Wrapper around [`size()`][method] method.
+    ///
+    /// [method]: https://doc.qt.io/qt-5/qpixmap.html#size
+    pub fn size(&self) -> QSize {
+        cpp!(unsafe [self as "const QPixmap*"] -> QSize as "QSize" { return self->size(); })
+    }
+
+    /// Wrapper around [`fill(const QColor &color = Qt::white)`][method] method.
+    ///
+    /// [method]: https://doc.qt.io/qt-5/qpixmap.html#fill
+    pub fn fill(&mut self, color: QColor) {
+        cpp!(unsafe [self as "QPixmap*", color as "QColor"] { self->fill(color); })
     }
 }
 
